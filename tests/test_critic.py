@@ -249,3 +249,17 @@ def test_c11_compare_needs_no_key():
                        cwd=ROOT, env=no_key_env(), capture_output=True, text=True, check=False)
     assert r.returncode == 0
     assert "0 image(s) where the two critics disagree" in r.stdout
+
+
+# ---------- Joud's prompt set: C12 input ----------
+
+def test_c12_joud_prompt_set_is_five_elements_with_the_shared_requirements_first():
+    from app.generator import SHARED_REQUIREMENTS, build_prompt
+    prompts = json.loads((ROOT / "prompts/joud.json").read_text())
+    assert [p["name"] for p in prompts] == ["emberpup", "tidefin", "sproutle", "pebblok", "zapplume"]
+    assert len({p["seed"] for p in prompts}) == 5
+    for p in prompts:
+        assert p["requirements"][:4] == SHARED_REQUIREMENTS
+        assert len(p["requirements"]) == 6
+        assert build_prompt("x", p["expected_text"])["expected_text"] == p["expected_text"]
+        assert f'"{p["expected_text"]}"' in p["prompt"]
