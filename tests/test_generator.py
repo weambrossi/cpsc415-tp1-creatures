@@ -85,7 +85,7 @@ def test_g7_no_key_no_call():
     assert "OPENROUTER_API_KEY is not set" in r.stderr
 
 
-def test_g5_missing_cost_is_reported_not_counted_as_zero(tmp_path):
+def test_g5_missing_cost_is_recorded_as_null_and_reported(tmp_path):
     class NoCost(FakeImages):
         def generate(self, **kwargs):
             r = super().generate(**kwargs)
@@ -93,9 +93,36 @@ def test_g5_missing_cost_is_reported_not_counted_as_zero(tmp_path):
             return r
 
     from app.generator import summary
-    client = SimpleNamespace(images=NoCost())
-    manifest = run(client, [build_prompt("an owl", "PROFOWL", seed=1)], tmp_path, "m")
+    manifest = run(SimpleNamespace(images=NoCost()), [build_prompt("an owl", "PROFOWL", seed=1)], tmp_path, "m")
     assert manifest[0]["cost"] is None
     assert summary(manifest) == "1 image(s), $0.0000 total, cost missing for 1 image(s)"
-    manifest[0]["cost"] = 0.014
-    assert summary(manifest) == "1 image(s), $0.0140 total"
+
+
+def test_g5_summary_with_every_cost_present():
+    from app.generator import summary
+    assert summary([{"cost": 0.014}, {"cost": 0.014}]) == "2 image(s), $0.0280 total"
+
+
+def test_g5_empty_reply_is_a_clear_error_not_an_index_error(tmp_path):
+    class Empty(FakeImages):
+        def generate(self, **kwargs):
+            r = super().generate(**kwargs)
+            r.data = []
+            return r
+
+    with pytest.raises(RuntimeError, match="no image"):
+        run(SimpleNamespace(images=Empty()), [build_prompt("an owl", "PROFOWL", seed=1)], tmp_path, "m")
+
+
+def test_g5_a_failure_midway_keeps_the_manifest_for_images_already_paid_for(tmp_path):
+    class FailSecond(FakeImages):
+        def generate(self, **kwargs):
+            if self.calls:
+                raise RuntimeError("model rejected the request")
+            return super().generate(**kwargs)
+
+    prompts = [build_prompt("an owl", "PROFOWL", seed=1), build_prompt("a fox", "STUDEX", seed=2)]
+    with pytest.raises(RuntimeError, match="rejected"):
+        run(SimpleNamespace(images=FailSecond()), prompts, tmp_path, "m")
+    saved = json.loads((tmp_path / "manifest.json").read_text())
+    assert [e["name"] for e in saved] == ["profowl"]
