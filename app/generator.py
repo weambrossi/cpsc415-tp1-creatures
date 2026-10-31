@@ -51,6 +51,8 @@ def generate_one(client, model: str, prompt: str, seed: int | None, aspect_ratio
     """One Image API call (POST /api/v1/images through the SDK): image bytes, media type, cost."""
     kwargs = {"seed": seed} if seed is not None else {}
     r = client.images.generate(model=model, prompt=prompt, aspect_ratio=aspect_ratio, **kwargs)
+    if not getattr(r, "data", None):
+        raise RuntimeError(f"{model} returned no image for this prompt")
     item = r.data[0]
     return {"bytes": base64.b64decode(item.b64_json), "media_type": item.media_type,
             "cost": getattr(r.usage, "cost", None) if r.usage is not None else None}
@@ -71,8 +73,11 @@ def run(client, prompts: list[dict], out: Path, model: str, aspect_ratio: str = 
         entry = {**p, "model": model, "aspect_ratio": aspect_ratio, "file": path.name,
                  "media_type": g["media_type"], "cost": g["cost"], "seconds": round(time.time() - t0, 1)}
         manifest.append(entry)
+        # Written after every image, so a failure later in the run keeps the record of what was paid for.
+        (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
         print(f"{path}  {g['media_type']}  seed={p['seed']}  ${g['cost']}  {entry['seconds']}s")
-    (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    if not manifest:
+        (out / "manifest.json").write_text("[]\n")
     return manifest
 
 

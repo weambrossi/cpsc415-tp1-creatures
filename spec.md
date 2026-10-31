@@ -60,8 +60,10 @@ each: language and model, with the alternative considered. Behaviors are numbere
 - G8 (key, by hand). Ethan's five-prompt set in `prompts/ethan.json`, generated once, is in
   `images/ethan/` with its manifest and both critique files.
 
-**Failure handling.** A model that rejects `seed` or `aspect_ratio` raises; the error is shown,
-nothing is retried. A misspelled name in the image is the critic-checker's to report; the
+**Failure handling.** A model that rejects `seed` or `aspect_ratio`, or a network failure, raises;
+the error is shown and nothing is retried. A reply with no image raises `RuntimeError` naming the
+model. `manifest.json` is rewritten after every image, so a failure partway through keeps the
+entries for the images already generated and paid for. A misspelled name in the image is the critic-checker's to report; the
 generator never regenerates. No key: G7.
 
 **Cost.** One FLUX image is about $0.014. A demo of five creatures is $0.07; a semester of one
