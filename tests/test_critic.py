@@ -325,3 +325,13 @@ def test_c10_case_and_punctuation_differences_are_not_disagreements():
     a = [{"name": "p1", "critique": {"checks": [{"requirement": "A b", "met": True}]}, "text_read": "EMBERPUP"}]
     b = [{"name": "p1", "critique": {"checks": [{"requirement": "a b.", "met": True}]}, "text_read": "emberpup"}]
     assert disagreements(a, b) == []
+
+
+# ---------- README provenance claim (plan J7) ----------
+
+def test_flux_images_carry_a_c2pa_manifest_naming_the_model():
+    for path in sorted((ROOT / "images").glob("*/*.jpg")):
+        data = path.read_bytes()
+        assert b"c2pa.claim.v2" in data, f"{path.name} has no C2PA claim"
+        assert b"trainedAlgorithmicMedia" in data
+        assert b"FLUX.2 [klein]" in data
