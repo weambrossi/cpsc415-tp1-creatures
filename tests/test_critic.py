@@ -7,6 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+
 from app.critic import check, critique_one, critique_set, disagreements, extract_json, text_matches
 
 ROOT = Path(__file__).resolve().parents[1]
