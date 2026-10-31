@@ -1,0 +1,302 @@
+[
+  {
+    "name": "profowl",
+    "model": "minimax/minimax-m3",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "A single owl is shown in the center of the image."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background surrounding the owl and banner is plain white."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "A banner across the top displays the name PROFOWL."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only visible text is PROFOWL on the banner."
+        },
+        {
+          "requirement": "The creature wears glasses",
+          "met": true,
+          "evidence": "The owl wears large round glasses."
+        },
+        {
+          "requirement": "The creature holds a book or a pointer",
+          "met": true,
+          "evidence": "The owl is holding an open book."
+        }
+      ]
+    },
+    "raw": "\n\n{\"checks\":[{\"requirement\":\"There is exactly one creature in the image\",\"met\":true,\"evidence\":\"A single owl is shown in the center of the image.\"},{\"requirement\":\"The background is plain white\",\"met\":true,\"evidence\":\"The background surrounding the owl and banner is plain white.\"},{\"requirement\":\"The name is shown in a banner at the top\",\"met\":true,\"evidence\":\"A banner across the top displays the name PROFOWL.\"},{\"requirement\":\"There is no text other than the name\",\"met\":true,\"evidence\":\"The only visible text is PROFOWL on the banner.\"},{\"requirement\":\"The creature wears glasses\",\"met\":true,\"evidence\":\"The owl wears large round glasses.\"},{\"requirement\":\"The creature holds a book or a pointer\",\"met\":true,\"evidence\":\"The owl is holding an open book.\"}]}",
+    "usage": {
+      "in": 1768,
+      "out": 387,
+      "cost": 0.000948,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "PROFOWL",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1592,
+      "out": 42,
+      "cost": 0.00048168,
+      "finish": "stop"
+    }
+  },
+  {
+    "name": "studex",
+    "model": "minimax/minimax-m3",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "The image shows a single fox-like creature."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background is a plain white field behind the banner and creature."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "An orange banner across the top displays the name \"STUDEX\"."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only visible text is \"STUDEX\" on the banner."
+        },
+        {
+          "requirement": "The creature wears a backpack",
+          "met": true,
+          "evidence": "The fox creature is visibly wearing a black backpack with shoulder straps."
+        },
+        {
+          "requirement": "The creature holds a pencil",
+          "met": true,
+          "evidence": "The fox creature is holding a yellow pencil in one hand."
+        }
+      ]
+    },
+    "raw": "{\"checks\":[{\"requirement\":\"There is exactly one creature in the image\",\"met\":true,\"evidence\":\"The image shows a single fox-like creature.\"},{\"requirement\":\"The background is plain white\",\"met\":true,\"evidence\":\"The background is a plain white field behind the banner and creature.\"},{\"requirement\":\"The name is shown in a banner at the top\",\"met\":true,\"evidence\":\"An orange banner across the top displays the name \\\"STUDEX\\\".\"},{\"requirement\":\"There is no text other than the name\",\"met\":true,\"evidence\":\"The only visible text is \\\"STUDEX\\\" on the banner.\"},{\"requirement\":\"The creature wears a backpack\",\"met\":true,\"evidence\":\"The fox creature is visibly wearing a black backpack with shoulder straps.\"},{\"requirement\":\"The creature holds a pencil\",\"met\":true,\"evidence\":\"The fox creature is holding a yellow pencil in one hand.\"}]}",
+    "usage": {
+      "in": 1742,
+      "out": 187,
+      "cost": 0.000573024,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "STUDEX",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1592,
+      "out": 52,
+      "cost": 0.00048792,
+      "finish": "stop"
+    }
+  },
+  {
+    "name": "boltbit",
+    "model": "minimax/minimax-m3",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "Only one robot creature is visible in the center of the image."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background behind the creature is plain white."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "A yellow/orange banner at the top displays the name 'BOLTBIT'."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "No other text is visible anywhere in the image besides 'BOLTBIT'."
+        },
+        {
+          "requirement": "The creature has a metal body with visible bolts or panels",
+          "met": true,
+          "evidence": "The robot shows a metallic body with clearly visible rivets/bolts and panel seams."
+        },
+        {
+          "requirement": "The creature has glowing eyes",
+          "met": true,
+          "evidence": "The creature's eyes are bright glowing orange/yellow with a luminous effect."
+        }
+      ]
+    },
+    "raw": "{\"checks\": [{\"requirement\": \"There is exactly one creature in the image\", \"met\": true, \"evidence\": \"Only one robot creature is visible in the center of the image.\"}, {\"requirement\": \"The background is plain white\", \"met\": true, \"evidence\": \"The background behind the creature is plain white.\"}, {\"requirement\": \"The name is shown in a banner at the top\", \"met\": true, \"evidence\": \"A yellow/orange banner at the top displays the name 'BOLTBIT'.\"}, {\"requirement\": \"There is no text other than the name\", \"met\": true, \"evidence\": \"No other text is visible anywhere in the image besides 'BOLTBIT'.\"}, {\"requirement\": \"The creature has a metal body with visible bolts or panels\", \"met\": true, \"evidence\": \"The robot shows a metallic body with clearly visible rivets/bolts and panel seams.\"}, {\"requirement\": \"The creature has glowing eyes\", \"met\": true, \"evidence\": \"The creature's eyes are bright glowing orange/yellow with a luminous effect.\"}]}",
+    "usage": {
+      "in": 962,
+      "out": 357,
+      "cost": 0.000717,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "BOLTBIT",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1592,
+      "out": 5,
+      "cost": 0.00043152,
+      "finish": "stop"
+    }
+  },
+  {
+    "name": "chefrog",
+    "model": "minimax/minimax-m3",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "A single green frog creature is shown."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background surrounding the banner and creature is plain white."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "A yellow-orange banner at the top displays \u201cCHEFROG.\u201d"
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only visible text is \u201cCHEFROG.\u201d"
+        },
+        {
+          "requirement": "The creature wears a chef's hat",
+          "met": true,
+          "evidence": "The frog wears a tall white chef's hat."
+        },
+        {
+          "requirement": "The creature holds a spoon",
+          "met": true,
+          "evidence": "The frog holds a wooden spoon."
+        }
+      ]
+    },
+    "raw": "\n\n{\"checks\":[{\"requirement\":\"There is exactly one creature in the image\",\"met\":true,\"evidence\":\"A single green frog creature is shown.\"},{\"requirement\":\"The background is plain white\",\"met\":true,\"evidence\":\"The background surrounding the banner and creature is plain white.\"},{\"requirement\":\"The name is shown in a banner at the top\",\"met\":true,\"evidence\":\"A yellow-orange banner at the top displays \u201cCHEFROG.\u201d\"},{\"requirement\":\"There is no text other than the name\",\"met\":true,\"evidence\":\"The only visible text is \u201cCHEFROG.\u201d\"},{\"requirement\":\"The creature wears a chef's hat\",\"met\":true,\"evidence\":\"The frog wears a tall white chef's hat.\"},{\"requirement\":\"The creature holds a spoon\",\"met\":true,\"evidence\":\"The frog holds a wooden spoon.\"}]}",
+    "usage": {
+      "in": 1770,
+      "out": 300,
+      "cost": 0.0008442,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "CHEFROG",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1592,
+      "out": 41,
+      "cost": 0.00047472,
+      "finish": "stop"
+    }
+  },
+  {
+    "name": "dashell",
+    "model": "minimax/minimax-m3",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "Only one turtle creature is visible in the image."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background behind the creature is solid white."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "An orange banner at the top displays the name 'DASHELL'."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only text visible in the image is 'DASHELL' on the banner."
+        },
+        {
+          "requirement": "The creature wears a sweatband",
+          "met": true,
+          "evidence": "The turtle has a blue sweatband tied around its head."
+        },
+        {
+          "requirement": "The creature is in a running pose",
+          "met": true,
+          "evidence": "The turtle is depicted mid-stride with legs extended in a running motion."
+        }
+      ]
+    },
+    "raw": "{\"checks\": [{\"requirement\": \"There is exactly one creature in the image\", \"met\": true, \"evidence\": \"Only one turtle creature is visible in the image.\"}, {\"requirement\": \"The background is plain white\", \"met\": true, \"evidence\": \"The background behind the creature is solid white.\"}, {\"requirement\": \"The name is shown in a banner at the top\", \"met\": true, \"evidence\": \"An orange banner at the top displays the name 'DASHELL'.\"}, {\"requirement\": \"There is no text other than the name\", \"met\": true, \"evidence\": \"The only text visible in the image is 'DASHELL' on the banner.\"}, {\"requirement\": \"The creature wears a sweatband\", \"met\": true, \"evidence\": \"The turtle has a blue sweatband tied around its head.\"}, {\"requirement\": \"The creature is in a running pose\", \"met\": true, \"evidence\": \"The turtle is depicted mid-stride with legs extended in a running motion.\"}]}",
+    "usage": {
+      "in": 953,
+      "out": 359,
+      "cost": 0.00056383,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "DASHELL",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1592,
+      "out": 5,
+      "cost": 0.00043152,
+      "finish": "stop"
+    }
+  }
+]
