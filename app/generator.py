@@ -53,7 +53,7 @@ def generate_one(client, model: str, prompt: str, seed: int | None, aspect_ratio
     r = client.images.generate(model=model, prompt=prompt, aspect_ratio=aspect_ratio, **kwargs)
     item = r.data[0]
     return {"bytes": base64.b64decode(item.b64_json), "media_type": item.media_type,
-            "cost": getattr(r.usage, "cost", None)}
+            "cost": getattr(r.usage, "cost", None) if r.usage is not None else None}
 
 
 def run(client, prompts: list[dict], out: Path, model: str, aspect_ratio: str = "1:1",
@@ -76,6 +76,13 @@ def run(client, prompts: list[dict], out: Path, model: str, aspect_ratio: str = 
     return manifest
 
 
+def summary(manifest: list[dict]) -> str:
+    """One line: image count and total cost, saying how many replies carried no cost."""
+    missing = sum(1 for e in manifest if e["cost"] is None)
+    line = f"{len(manifest)} image(s), ${sum(e['cost'] for e in manifest if e['cost'] is not None):.4f} total"
+    return line + (f", cost missing for {missing} image(s)" if missing else "")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("prompts", type=Path)
@@ -92,7 +99,7 @@ def main() -> None:
 
     manifest = run(OpenRouter(api_key=key), json.loads(args.prompts.read_text()), args.out,
                    args.model, args.aspect_ratio, args.only)
-    print(f"{len(manifest)} image(s), ${sum(e['cost'] or 0 for e in manifest):.4f} total")
+    print(summary(manifest))
 
 
 if __name__ == "__main__":

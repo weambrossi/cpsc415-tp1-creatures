@@ -46,12 +46,17 @@ each: language and model, with the alternative considered. Behaviors are numbere
   background; the name in a banner at the top; no text other than the name.
 - G3. A name that is empty, longer than 12 characters, or not letters only is rejected with
   `ValueError` before any call.
-- G4. A description that names an existing franchise ("pokemon", "pikachu", "digimon") is
-  rejected with `ValueError`; the app makes original creatures only.
+- G4. A description that names an existing franchise or character is rejected with `ValueError`;
+  the app makes original creatures only. The blocked words are `BLOCKED` in `app/generator.py`:
+  pokemon, pokémon, pikachu, digimon, nintendo.
 - G5. `run` makes one call per prompt with the prompt, seed, and model as given, and writes one
-  manifest entry per prompt with every field above and the cost from the reply.
+  manifest entry per prompt with every field above. `requirements` is the prompt's own list: the
+  four shared ones from `build_prompt`, plus any per-creature requirements a prompts file adds
+  (Ethan's adds two per creature). `cost` is the reply's `usage.cost`, or `null` when the reply has
+  none; the summary line says how many costs were missing instead of counting them as $0.
 - G6. `run(..., only=NAME)` makes exactly one call.
-- G7. Without `OPENROUTER_API_KEY` the CLI prints one line saying so and exits 1; nothing is billed.
+- G7. Without `OPENROUTER_API_KEY` the CLI prints one line to stderr saying so and exits 1;
+  nothing is billed.
 - G8 (key, by hand). Ethan's five-prompt set in `prompts/ethan.json`, generated once, is in
   `images/ethan/` with its manifest and both critique files.
 
