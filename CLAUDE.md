@@ -8,6 +8,12 @@ Team Project 1 for CPSC 415: a web app that generates images of original pocket 
 text description, displays them, and critiques each one with a vision model that reads the image.
 The critique is checked in plain code. See [`spec.md`](spec.md) and [`plan.md`](plan.md).
 
+## Team and who does what
+Three members: Ethan, Joud, Lane. **Before any work, read `plan.md` → "Who does what" and follow
+its numbered rules.** Ask who you are working with if they have not said, do only that person's
+next unchecked task, on their own branch, in the files they own. Never sign an "Approved by" line,
+approve or merge a PR, submit on Moodle, or write someone's `ANNOTATION.md` answers.
+
 ## Commands
 ```
 # setup   python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
