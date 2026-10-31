@@ -143,4 +143,4 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
 ## Subagents and parallel work
 None. The three members' work runs in parallel on separate branches and separate files.
 
-**Approved by:** <your name>, <date>
+**Approved by:** Ethan Ambrossi, 2026-10-31
