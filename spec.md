@@ -6,7 +6,7 @@
 ## Intent
 One intent per major feature, each approved by its owner:
 - [`intent/generator.md`](intent/generator.md) (Ethan): text to creature image, with a manifest.
-- `intent/critic.md` (Joud): the vision critique, checked in code. _Plan task J3._
+- [`intent/critic.md`](intent/critic.md) (Joud): the vision critique, checked in code.
 - `intent/web-app.md` (Lane): the page and the server that holds the key. _Plan task L2._
 
 ## Components
@@ -72,7 +72,68 @@ generator never regenerates. No key: G7.
 creature a day is about $1.50.
 
 ### Critic-checker (`app/critic.py`), owner Joud
-_Written by Joud (plan task J3): language and model decisions, numbered behaviors C1..._
+- **What it does:** sends each image with its requirements to a vision model as a yes/no checklist
+  (`critique_one`), asks a second narrow question for the name in the banner, and checks both
+  answers in plain code (`check`, `text_matches`). `critique_set` runs a whole manifest and
+  `disagreements` compares two critique files.
+- **Language:** Python 3.13. **Why:** it reads the generator's manifest and is imported by the
+  server, both Python, and the `openrouter` SDK sends the image as a data URL on the chat endpoint.
+  JavaScript in the browser was considered and ruled out: the key would have to reach the page.
+- **Model:** `minimax/minimax-m3`, checked by `xiaomi/mimo-v2.6-flash`. **Why:** on Ethan's five
+  images minimax cost about $0.001 per checklist plus $0.0005 for the name, so a full critique is
+  under a cent per image. A second, different model is the only check on the critic that does not
+  need a person; where the two disagree, a person looks. MiMo runs with reasoning off
+  (`effort: none`) so hidden reasoning does not eat the token budget. A frontier model was
+  considered and ruled out on cost: the checklist is yes/no questions about a simple image.
+- **Interfaces:**
+  - `extract_json(text) -> dict | None`: the JSON object inside a reply, fenced or in prose.
+  - `check(requirements, critique) -> {"ok", "problems", "unmet", "missing", "extra"}`.
+  - `text_matches(expected, read) -> bool`.
+  - `critique_one(client, model, image_bytes, media_type, prompt, requirements, expected_text=None)
+    -> result` with `model`, `critique`, `raw`, `usage`, `check`, `text_read`, `text_matches`,
+    `usage_text`, `passes`, `problems`. The server calls this for one image.
+  - `critique_set(client, model, manifest_path, out_path) -> [result + "name"]`.
+  - `disagreements(a, b) -> [{"name", "diffs"}]`.
+  - CLI: `python -m app.critic MANIFEST [--model SLUG] [--out FILE]` and
+    `python -m app.critic --compare A.json B.json`. `--model` defaults to `CHAT_MODEL`, else
+    `minimax/minimax-m3`; `--out` defaults to `critique.json` beside the manifest.
+- **Dependencies:** `openrouter` (already listed).
+
+**Behavior (no key unless marked)**
+- C1. A reply that is not the JSON checklist (prose, a refusal, an empty reply, a reply cut off at
+  the token limit) is a failed critique: `ok` is false and every requirement is listed as missing.
+  Nothing raises.
+- C2. JSON inside prose or a code fence is extracted and checked.
+- C3. A requirement the critic did not answer is a problem, named in `problems`.
+- C4. An item the critic answered that was not asked (an invented requirement) is a problem, named.
+- C5. A requirement is met only when `met` is the JSON value `true`. `false` makes it unmet; a
+  `met` that is not a boolean (`"yes"`, `1`, missing) counts as unanswered; the same requirement
+  answered twice with different verdicts counts as unanswered. Each is named.
+- C6. Requirement text is matched ignoring case, spacing, and punctuation.
+- C7. The name is read by a second call ("write the largest text exactly as printed") and compared
+  in code with `expected_text`, ignoring case and surrounding punctuation. A mismatch or an empty
+  read is a problem naming both strings. The checklist's own answer about the banner does not
+  override this.
+- C8. `critique_one` makes exactly two calls with an `expected_text`, one without. `passes` is true
+  only when `check` is ok and the name matches. `usage` records tokens, finish reason, and the
+  reply's `cost`, or `null` when the reply has none.
+- C9. `critique_set` makes one `critique_one` per manifest entry and rewrites the output file after
+  each image. An API error on one image is recorded on that entry as a failed critique with the
+  error text, and the run goes on to the next image.
+- C10. `disagreements` lists, per image, every requirement and the name read where the two files
+  differ, and names images that are in only one file.
+- C11. Without `OPENROUTER_API_KEY` the CLI prints one line to stderr saying so and exits 1;
+  nothing is billed. `--compare` needs no key.
+- C12 (key, by hand). Joud's five-prompt set (`prompts/joud.json`, one creature per element:
+  fire, water, leaf, stone, storm) is generated once and critiqued once by each model, in
+  `images/joud/` with `manifest.json`, `critique.json`, and `critique-mimo.json`.
+
+**Failure handling.** Bad JSON is C1. A network or API error on a single-image call raises to the
+caller (the server shows it); in `critique_set` it is C9. Nothing is retried. A model that
+disagrees with itself (checklist says the banner is fine, the name read does not match) fails the
+image: the code trusts the narrow question over the broad one.
+
+**Cost.** About $0.0015 per image per critic. Both critics on five images is under $0.02.
 
 ### Web app (`app/server.py`, `static/`), owner Lane
 _Written by Lane (plan task L2): language and framework decisions, numbered behaviors W1..._

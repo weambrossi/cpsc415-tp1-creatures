@@ -62,7 +62,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
       `chmod +x`, then add `PATH="$(pwd)/.venv/bin:$PATH"` after its `cd` line), and check the
       guard blocks `git push --force`.
 - [ ] J2. Review and approve the plan PR and PR 1.
-- [ ] J3. `intent/critic.md` (approved by Joud) and the Critic-checker section of `spec.md`:
+- [x] J3. `intent/critic.md` (approved by Joud) and the Critic-checker section of `spec.md`:
       language Python; model `minimax/minimax-m3`, checked by `xiaomi/mimo-v2.6-flash` (the
       cheap-vs-stronger comparison TP1 requires). Numbered behaviors: a critique that is not JSON
       is a failed critique, not a crash; an unanswered requirement is a problem; an invented
