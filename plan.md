@@ -47,7 +47,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
       `manifest.json` with prompt, seed, model, media type, cost), no-key tests first,
       `images/ethan/` + `prompts/ethan.json`. Gate, `review.py`, findings as a PR comment, fix or
       answer every pass-1/pass-2 finding. **Joud approves**, then merge.
-- [ ] E7. `ANNOTATION.md` Generator section, written by Ethan.
+- [x] E7. `ANNOTATION.md` Generator section, written by Ethan.
 - [ ] E8. After PR 3 merges: tag `tp1-submitted`, push it, submit repo URL + tag on Moodle.
       Tag own `cpsc415-week05` `week06-submitted` and submit the Week 6 lab.
 - [ ] E9. Presentation outline: live demo, one chain artifact on screen, one failure and the fix.
