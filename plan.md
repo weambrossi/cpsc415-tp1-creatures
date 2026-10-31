@@ -38,7 +38,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
 - [x] E1. Team repo from the course template: guard, `requirements.txt`, conventions, pre-push gate.
 - [ ] E2. Add Joud and Lane as collaborators on GitHub.
 - [ ] E3. This plan, approved by Ethan, merged through PR `plan-ethan`; Joud approves.
-- [ ] E4. `intent/generator.md` (approved by Ethan) and the Generator section of `spec.md`:
+- [x] E4. `intent/generator.md` (approved by Ethan) and the Generator section of `spec.md`:
       language Python; model `black-forest-labs/flux.2-klein-4b`, compared with
       `google/gemini-3.1-flash-lite-image`, with cost and seed results from the Week 6 lab.
 - [ ] E5. Week 6 lab steps 1–5 in Ethan's own `cpsc415-week05` (family: PROFOWL, STUDEX,
