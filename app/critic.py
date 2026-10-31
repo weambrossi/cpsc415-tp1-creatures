@@ -42,16 +42,19 @@ NOT_JSON = "critique was not the JSON checklist that was asked for"
 
 def extract_json(text: str | None) -> dict | None:
     """The JSON object inside a reply, or None. Models wrap JSON in fences or prose (C1, C2)."""
-    if not text:
+    if not isinstance(text, str) or not text:
         return None
-    m = re.search(r"\{.*\}", text, re.DOTALL)
-    if not m:
-        return None
-    try:
-        obj = json.loads(m.group(0))
-    except json.JSONDecodeError:
-        return None
-    return obj if isinstance(obj, dict) else None
+    decoder, found = json.JSONDecoder(), []
+    for start in (i for i, ch in enumerate(text) if ch == "{"):
+        try:
+            obj, _ = decoder.raw_decode(text, start)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict):
+            if "checks" in obj:
+                return obj           # the checklist, even with other braces in the prose around it
+            found.append(obj)
+    return found[0] if found else None
 
 
 def check(requirements: list[str], critique: dict | None) -> dict:
@@ -97,9 +100,13 @@ def disagreements(a: list[dict], b: list[dict]) -> list[dict]:
             out.append({"name": name, "diffs": [{"requirement": "<image>", "a": ea is not None, "b": eb is not None}]})
             continue
         va, vb = _verdicts(ea), _verdicts(eb)
-        diffs = [{"requirement": req, "a": va.get(req), "b": vb.get(req)}
-                 for req in sorted(set(va) | set(vb)) if va.get(req) != vb.get(req)]
-        if ea.get("text_read") != eb.get("text_read"):
+        diffs = []
+        for key in sorted(set(va) | set(vb)):
+            text, met_a = va.get(key, (None, None))
+            text_b, met_b = vb.get(key, (None, None))
+            if met_a != met_b:
+                diffs.append({"requirement": text or text_b, "a": met_a, "b": met_b})
+        if _strip_text(ea.get("text_read") or "") != _strip_text(eb.get("text_read") or ""):
             diffs.append({"requirement": "<text read>", "a": ea.get("text_read"), "b": eb.get("text_read")})
         if diffs:
             out.append({"name": name, "diffs": diffs})
@@ -116,7 +123,9 @@ def _strip_text(s: str) -> str:
 
 def _verdicts(entry: dict) -> dict:
     checks = (entry.get("critique") or {}).get("checks") or []
-    return {c.get("requirement"): c.get("met") for c in checks if isinstance(c, dict)}
+    # Model-written text: skip entries without a string requirement, and match loosely (C6).
+    return {_norm(c["requirement"]): (c["requirement"], c.get("met")) for c in checks
+            if isinstance(c, dict) and isinstance(c.get("requirement"), str)}
 
 
 # ---------- the billed part ----------
@@ -134,7 +143,8 @@ def ask(client, model: str, image_bytes: bytes, media_type: str, question: str,
     if not c.choices:
         return None, {**usage, "finish": None}
     usage["finish"] = c.choices[0].finish_reason      # "length" means the budget ran out mid-answer (C1)
-    return c.choices[0].message.content, usage
+    content = c.choices[0].message.content
+    return (content if isinstance(content, str) else None), usage
 
 
 def critique_one(client, model: str, image_bytes: bytes, media_type: str, prompt: str,
@@ -142,7 +152,8 @@ def critique_one(client, model: str, image_bytes: bytes, media_type: str, prompt
     """Checklist call, then the name call if a name is expected; both answers checked in code (C7, C8)."""
     items = "\n".join(f"- {r}" for r in requirements)
     raw, usage = ask(client, model, image_bytes, media_type, CHECKLIST_PROMPT.format(prompt=prompt, items=items))
-    critique = extract_json(raw)
+    # C1: a reply cut off at the token limit is a failed critique, even if what arrived parses.
+    critique = extract_json(raw) if usage.get("finish") != "length" else None
     result = {"model": model, "critique": critique, "raw": raw, "usage": usage,
               "check": check(requirements, critique)}
     problems = list(result["check"]["problems"])

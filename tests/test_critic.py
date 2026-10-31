@@ -263,3 +263,65 @@ def test_c12_joud_prompt_set_is_five_elements_with_the_shared_requirements_first
         assert len(p["requirements"]) == 6
         assert build_prompt("x", p["expected_text"])["expected_text"] == p["expected_text"]
         assert f'"{p["expected_text"]}"' in p["prompt"]
+
+
+# ---------- review findings on PR 2 ----------
+
+@pytest.mark.parametrize("text", [
+    '{"checks": [{"requirement": "a", "met": true}]} Note: {none}',
+    'Items {x}: {"checks": [{"requirement": "a", "met": true}]}',
+    '```json\n{"checks": [{"requirement": "a", "met": true}]}\n```\n```json\n{"other": 1}\n```',
+])
+def test_c2_checklist_is_found_when_the_prose_has_other_braces(text):
+    assert extract_json(text) == {"checks": [{"requirement": "a", "met": True}]}
+
+
+def test_c1_list_content_from_the_sdk_is_a_failed_critique_not_a_crash():
+    chat = FakeChat([{"type": "text", "text": "hi"}], name="EMBERPUP")
+    r = critique_one(client(chat), "m", b"img", "image/jpeg", "p", REQS, "EMBERPUP")
+    assert r["critique"] is None
+    assert r["passes"] is False
+
+
+def test_c1_reply_cut_off_at_the_token_limit_is_a_failed_critique():
+    class Cut(FakeChat):
+        def send(self, **kwargs):
+            r = super().send(**kwargs)
+            r.choices[0].finish_reason = "length"
+            return r
+
+    r = critique_one(client(Cut(json.dumps(critique_with(True, True, True)))), "m", b"img", "image/jpeg", "p", REQS)
+    assert r["usage"]["finish"] == "length"
+    assert r["passes"] is False
+
+
+def test_c8_usage_records_tokens():
+    chat = FakeChat(json.dumps(critique_with(True, True, True)))
+    r = critique_one(client(chat), "m", b"img", "image/jpeg", "p", REQS)
+    assert (r["usage"]["in"], r["usage"]["out"]) == (1500, 300)
+
+
+def test_c9_file_is_rewritten_after_each_image(tmp_path):
+    out = tmp_path / "critique.json"
+    seen = []
+
+    class Watch(FakeChat):
+        def send(self, **kwargs):
+            seen.append(len(json.loads(out.read_text())) if out.exists() else 0)
+            return super().send(**kwargs)
+
+    critique_set(client(Watch(json.dumps(critique_with(True, True, True)))), "m",
+                 write_manifest(tmp_path, ["a", "b"]), out)
+    assert seen == [0, 0, 1, 1]          # image b's calls happen after image a is already on disk
+
+
+def test_c10_model_written_junk_in_a_critique_file_does_not_crash_compare():
+    junk = {"checks": [{"met": True}, {"requirement": ["a"], "met": True}, "x"] + critique_with(True)["checks"]}
+    a = [{"name": "p1", "critique": junk, "text_read": "EMBERPUP"}]
+    assert disagreements(a, a) == []
+
+
+def test_c10_case_and_punctuation_differences_are_not_disagreements():
+    a = [{"name": "p1", "critique": {"checks": [{"requirement": "A b", "met": True}]}, "text_read": "EMBERPUP"}]
+    b = [{"name": "p1", "critique": {"checks": [{"requirement": "a b.", "met": True}]}, "text_read": "emberpup"}]
+    assert disagreements(a, b) == []
