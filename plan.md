@@ -36,7 +36,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
 `images/ethan/`, `ANNOTATION.md` Generator section.
 
 - [x] E1. Team repo from the course template: guard, `requirements.txt`, conventions, pre-push gate.
-- [ ] E2. Add Joud and Lane as collaborators on GitHub.
+- [x] E2. Add Joud and Lane as collaborators on GitHub (joudbitar, lanefaison1-del invited Oct 31).
 - [ ] E3. This plan, approved by Ethan, merged through PR `plan-ethan`; Joud approves.
 - [x] E4. `intent/generator.md` (approved by Ethan) and the Generator section of `spec.md`:
       language Python; model `black-forest-labs/flux.2-klein-4b`, compared with
