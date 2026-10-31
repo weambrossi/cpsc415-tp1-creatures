@@ -83,3 +83,19 @@ def test_g7_no_key_no_call():
                        cwd=ROOT, env=env, capture_output=True, text=True, check=False)
     assert r.returncode == 1
     assert "OPENROUTER_API_KEY is not set" in r.stderr
+
+
+def test_g5_missing_cost_is_reported_not_counted_as_zero(tmp_path):
+    class NoCost(FakeImages):
+        def generate(self, **kwargs):
+            r = super().generate(**kwargs)
+            r.usage = None
+            return r
+
+    from app.generator import summary
+    client = SimpleNamespace(images=NoCost())
+    manifest = run(client, [build_prompt("an owl", "PROFOWL", seed=1)], tmp_path, "m")
+    assert manifest[0]["cost"] is None
+    assert summary(manifest) == "1 image(s), $0.0000 total, cost missing for 1 image(s)"
+    manifest[0]["cost"] = 0.014
+    assert summary(manifest) == "1 image(s), $0.0140 total"
