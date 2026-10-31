@@ -1,0 +1,72 @@
+[
+  {
+    "name": "profowl",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a wise professor owl wearing round glasses and holding an open book. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"PROFOWL\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6101,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature wears glasses",
+      "The creature holds a book or a pointer"
+    ],
+    "expected_text": "PROFOWL"
+  },
+  {
+    "name": "studex",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: an eager student fox wearing a backpack and holding a pencil. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"STUDEX\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6102,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature wears a backpack",
+      "The creature holds a pencil"
+    ],
+    "expected_text": "STUDEX"
+  },
+  {
+    "name": "boltbit",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a small friendly robot creature with a metal body, visible bolts and panels, and glowing eyes. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"BOLTBIT\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6103,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature has a metal body with visible bolts or panels",
+      "The creature has glowing eyes"
+    ],
+    "expected_text": "BOLTBIT"
+  },
+  {
+    "name": "chefrog",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a cheerful chef frog wearing a tall white chef's hat and holding a wooden spoon. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"CHEFROG\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6104,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature wears a chef's hat",
+      "The creature holds a spoon"
+    ],
+    "expected_text": "CHEFROG"
+  },
+  {
+    "name": "dashell",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a speedy athlete turtle wearing a sweatband, caught mid-run. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"DASHELL\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6105,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature wears a sweatband",
+      "The creature is in a running pose"
+    ],
+    "expected_text": "DASHELL"
+  }
+]
