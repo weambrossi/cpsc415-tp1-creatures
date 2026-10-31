@@ -92,7 +92,8 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("prompts", type=Path)
     ap.add_argument("--out", type=Path, required=True)
-    ap.add_argument("--model", default=os.environ.get("IMAGE_MODEL", DEFAULT_MODEL))
+    ap.add_argument("--model", default=os.environ.get("IMAGE_MODEL", DEFAULT_MODEL),
+                    help="image model slug (default: $IMAGE_MODEL, else FLUX.2 klein)")
     ap.add_argument("--aspect-ratio", default="1:1")
     ap.add_argument("--only", help="generate just the prompt with this name")
     args = ap.parse_args()

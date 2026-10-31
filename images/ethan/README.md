@@ -6,5 +6,5 @@ each, seeds 6101–6105, generated once on `black-forest-labs/flux.2-klein-4b` o
 `critique.json` is `minimax/minimax-m3`; `critique-mimo.json` is `xiaomi/mimo-v2.6-flash`. Both
 passed all five (30/30 requirements, all names read correctly) and did not disagree. Full record,
 including the seed check and the Gemini comparison:
-[`week06/CHECKS.md`](https://github.com/weambrossi/cpsc415-week05/blob/main/week06/CHECKS.md)
-in Ethan's Week 5 repository.
+[`week06/CHECKS.md`](https://github.com/weambrossi/cpsc415-week05/blob/ce990f575adfb16bdda55c0b8428c4db6e1eafd5/week06/CHECKS.md)
+in Ethan's Week 5 repository (commit `ce990f5`).

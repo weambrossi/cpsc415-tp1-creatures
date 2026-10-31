@@ -9,7 +9,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.generator import SHARED_REQUIREMENTS, build_prompt, run
+from app.generator import SHARED_REQUIREMENTS, build_prompt, run, summary
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -92,14 +92,12 @@ def test_g5_missing_cost_is_recorded_as_null_and_reported(tmp_path):
             r.usage = None
             return r
 
-    from app.generator import summary
     manifest = run(SimpleNamespace(images=NoCost()), [build_prompt("an owl", "PROFOWL", seed=1)], tmp_path, "m")
     assert manifest[0]["cost"] is None
     assert summary(manifest) == "1 image(s), $0.0000 total, cost missing for 1 image(s)"
 
 
 def test_g5_summary_with_every_cost_present():
-    from app.generator import summary
     assert summary([{"cost": 0.014}, {"cost": 0.014}]) == "2 image(s), $0.0280 total"
 
 

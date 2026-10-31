@@ -33,7 +33,9 @@ each: language and model, with the alternative considered. Behaviors are numbere
   - `generate_one(client, model, prompt, seed, aspect_ratio="1:1") -> {"bytes", "media_type", "cost"}`.
   - `run(client, prompts, out_dir, model, aspect_ratio="1:1", only=None) -> manifest`; writes the
     images and `out_dir/manifest.json`.
-  - CLI: `python -m app.generator PROMPTS.json --out DIR [--model SLUG] [--only NAME]`.
+  - CLI: `python -m app.generator PROMPTS.json --out DIR [--model SLUG] [--only NAME]`
+    `--model` defaults to the `IMAGE_MODEL` environment variable, else `black-forest-labs/flux.2-klein-4b`; the
+    server uses the same default.
   - Manifest entry: `name`, `prompt`, `seed`, `requirements`, `expected_text`, `model`,
     `aspect_ratio`, `file`, `media_type`, `cost`, `seconds`.
 - **Dependencies:** `openrouter`.
