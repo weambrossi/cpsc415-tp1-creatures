@@ -153,3 +153,29 @@ def test_w9_no_key_the_server_does_not_start():
                        capture_output=True, text=True, check=False, timeout=30)
     assert r.returncode == 1
     assert "OPENROUTER_API_KEY is not set" in r.stderr
+
+
+def test_w8_a_critic_result_the_server_cannot_read_is_a_json_502():
+    client = server.create_app(FakeImageModel(), lambda image_bytes, entry: "not a dict").test_client()
+    r = client.post("/api/critique", json={"id": generate(client).get_json()["id"]})
+    assert r.status_code == 502
+    assert "error" in r.get_json()
+
+
+def test_w8_an_image_result_the_server_cannot_read_is_a_json_502():
+    client = server.create_app(lambda prompt, seed: {"bytes": b"x"}, FakeCritic()).test_client()
+    r = generate(client)
+    assert r.status_code == 502
+    assert "error" in r.get_json()
+
+
+def test_w5_a_missing_cost_is_reported_as_null_not_counted_as_zero():
+    class NoCost(FakeCritic):
+        def __call__(self, image_bytes, entry):
+            result = super().__call__(image_bytes, entry)
+            result["usage_text"]["cost"] = None
+            return result
+
+    client = server.create_app(FakeImageModel(), NoCost()).test_client()
+    body = client.post("/api/critique", json={"id": generate(client).get_json()["id"]}).get_json()
+    assert body["cost"] is None
