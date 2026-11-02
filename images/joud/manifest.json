@@ -1,0 +1,102 @@
+[
+  {
+    "name": "emberpup",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a small fire puppy with a flame-tipped tail and glowing ember spots on its fur. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"EMBERPUP\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6201,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature's tail ends in a flame",
+      "The creature has glowing ember spots"
+    ],
+    "expected_text": "EMBERPUP",
+    "model": "black-forest-labs/flux.2-klein-4b",
+    "aspect_ratio": "1:1",
+    "file": "emberpup.jpg",
+    "media_type": "image/jpeg",
+    "cost": 0.014,
+    "seconds": 5.1
+  },
+  {
+    "name": "tidefin",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a round water fish creature with fin-shaped arms and a wave crest on its head. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"TIDEFIN\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6202,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature has fins",
+      "The creature has a wave-shaped crest on its head"
+    ],
+    "expected_text": "TIDEFIN",
+    "model": "black-forest-labs/flux.2-klein-4b",
+    "aspect_ratio": "1:1",
+    "file": "tidefin.jpg",
+    "media_type": "image/jpeg",
+    "cost": 0.014,
+    "seconds": 4.4
+  },
+  {
+    "name": "sproutle",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a tiny leaf turtle with a shell made of overlapping green leaves and a sprout on its head. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"SPROUTLE\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6203,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature's shell is made of leaves",
+      "The creature has a sprout on its head"
+    ],
+    "expected_text": "SPROUTLE",
+    "model": "black-forest-labs/flux.2-klein-4b",
+    "aspect_ratio": "1:1",
+    "file": "sproutle.jpg",
+    "media_type": "image/jpeg",
+    "cost": 0.014,
+    "seconds": 3.9
+  },
+  {
+    "name": "pebblok",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a sturdy stone armadillo with a cracked rock shell and pebbles on its back. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"PEBBLOK\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6204,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature has a rock shell",
+      "The creature has pebbles on its back"
+    ],
+    "expected_text": "PEBBLOK",
+    "model": "black-forest-labs/flux.2-klein-4b",
+    "aspect_ratio": "1:1",
+    "file": "pebblok.jpg",
+    "media_type": "image/jpeg",
+    "cost": 0.014,
+    "seconds": 3.7
+  },
+  {
+    "name": "zapplume",
+    "prompt": "An original cute creature-collector monster in colorful anime game art style: a fluffy storm bird with storm-cloud feathers and a lightning-bolt crest. Exactly one creature, centered, full body, on a plain white background. A banner across the top shows the name \"ZAPPLUME\" in large, clear capital letters. No other text anywhere in the image.",
+    "seed": 6205,
+    "requirements": [
+      "There is exactly one creature in the image",
+      "The background is plain white",
+      "The name is shown in a banner at the top",
+      "There is no text other than the name",
+      "The creature has feathers that look like storm clouds",
+      "The creature has a lightning-bolt crest"
+    ],
+    "expected_text": "ZAPPLUME",
+    "model": "black-forest-labs/flux.2-klein-4b",
+    "aspect_ratio": "1:1",
+    "file": "zapplume.jpg",
+    "media_type": "image/jpeg",
+    "cost": 0.014,
+    "seconds": 3.7
+  }
+]

@@ -74,7 +74,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
       critique files), no-key tests first (all met, one unmet, unanswered, invented, not JSON,
       JSON in prose, name mismatch, two critics disagreeing), `images/joud/` with manifest and both
       critique files. Gate, reviewer, PR comment, fixes. **Lane approves**, then merge.
-- [ ] J6. `ANNOTATION.md` Critic-checker section, written by Joud.
+- [x] J6. `ANNOTATION.md` Critic-checker section, written by Joud.
 - [ ] J7. `README.md`: running cost total from each member's OpenRouter usage page, and what
       provenance each image model's output carries.
 - [ ] J8. Tag own `cpsc415-week05` `week06-submitted`; submit PR 2 URL + repo URL on Moodle.

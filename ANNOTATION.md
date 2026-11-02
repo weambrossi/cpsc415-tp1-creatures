@@ -15,7 +15,12 @@ prompt, seed, model, media type, and the cost from the reply. It does not critiq
 regenerate one that came out wrong; that is the critic-checker's job to report.
 
 ### Critic-checker (Joud)
-_To be written by Joud._
+It looks at each creature and reports what came out wrong. For every image in the manifest it makes
+two calls to a vision model through OpenRouter: one answers each of the image's requirements with
+true or false and a line of evidence, and one reads the name off the banner. Then code decides. It
+checks that the checklist covers exactly the requirements the generator asked for, with real
+booleans, and compares the name the model read against `expected_text`. It does not make or fix
+images, judge whether a creature looks good, or pick the best of several.
 
 ### Web app (Lane)
 _To be written by Lane._
@@ -30,7 +35,13 @@ and printed "ARCANE KNOWLEDGE" on the owl's book, breaking "no text other than t
 because the OpenRouter SDK and the critic and server that import the generator are Python.
 
 ### Critic-checker (Joud)
-_To be written by Joud._
+A model will say an image passes even when it is wrong, so I treat its answer as a claim and code
+has the last word. Code can't see the picture, but it can catch a skipped requirement, an invented
+one, a "yes" string where it wanted `true`, and a misspelled name. The name check came from October
+19, when a person looking at the images missed "Integratlon" on a banner. I used two critics because
+one model misreading looks the same as a real failure. MiniMax M3 is the default and cost $0.0081 on
+my five images; MiMo v2.6 flash cost $0.0018. Python, because Ethan's generator and Lane's server
+are Python.
 
 ### Web app (Lane)
 _To be written by Lane._
@@ -45,7 +56,12 @@ around: it blocks names like "pokemon" or "pikachu", but a description such as "
 mouse" gets through.
 
 ### Critic-checker (Joud)
-_To be written by Joud._
+The critic can misread the name, and the code trusts what it read. On ZAPPLUME the banner is spelled
+right, but MiniMax read "ZAPLUME" and failed the image while MiMo passed it. `--compare` flagged it
+because the two disagreed, but if both models misread the same way, nothing flags it. The checklist
+has the same weakness: code checks that every requirement got an answer, and it has no way to know
+if "met: true" is true. A pass only means the model said yes to everything and the name it read
+matched, so someone still has to look at the failures.
 
 ### Web app (Lane)
 _To be written by Lane._
@@ -61,7 +77,12 @@ gate, so I answered the finding on the PR instead of changing the code. A review
 a list to check against the code, not a verdict.
 
 ### Critic-checker (Joud)
-_To be written by Joud._
+The parser broke on a correct answer. The reviewing agent found that `extract_json` grabbed
+everything from the first `{` to the last `}`, so a stray brace in the model's prose turned a valid
+checklist into a failed critique. It's fixed now with `raw_decode` and three tests. I also learned
+to read `finish_reason`: before the fix, a reply cut off at "length" could still pass, and now it
+counts as a failed critique. And the model I picked as the default was the one that misread
+ZAPPLUME, which I wouldn't have known without running a second one.
 
 ### Web app (Lane)
 _To be written by Lane._
