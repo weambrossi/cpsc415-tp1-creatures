@@ -1,3 +1,5 @@
 openrouter
 pytest
 ruff
+flask
+playwright

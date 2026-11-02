@@ -85,7 +85,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
 `images/lane/`, `CLAUDE.md` Commands for the server, `ANNOTATION.md` Web app section.
 
 - [x] L1. Clone and set up (same as J1).
-- [ ] L2. `intent/web-app.md` (approved by Lane) and the Web app section of `spec.md`: language
+- [x] L2. `intent/web-app.md` (approved by Lane) and the Web app section of `spec.md`: language
       Python; framework Flask vs standard-library `http.server` (see the course's
       `examples/key-on-server`); the key stays on the server; `flask` and `playwright` named under
       Dependencies before they are installed (the guard blocks them otherwise).
