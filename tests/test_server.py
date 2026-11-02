@@ -43,7 +43,7 @@ def test_w2_generate_calls_the_image_model_once_with_the_generators_prompt(fakes
     assert body["image"] == "data:image/png;base64," + base64.b64encode(PIXEL_PNG).decode()
     assert body["requirements"] == expected["requirements"]
     assert body["expected_text"] == "FERNKIT"
-    for field in ("id", "media_type", "seed", "model", "cost", "prompt"):
+    for field in ("id", "media_type", "seed", "model", "cost", "prompt", "seconds"):
         assert field in body
 
 
