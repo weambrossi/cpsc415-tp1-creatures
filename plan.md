@@ -84,8 +84,8 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
 `tests/test_server.py`, `tests/test_browser.py`, `tests/fakes.py`, `prompts/lane.json`,
 `images/lane/`, `CLAUDE.md` Commands for the server, `ANNOTATION.md` Web app section.
 
-- [ ] L1. Clone and set up (same as J1).
-- [ ] L2. `intent/web-app.md` (approved by Lane) and the Web app section of `spec.md`: language
+- [x] L1. Clone and set up (same as J1).
+- [x] L2. `intent/web-app.md` (approved by Lane) and the Web app section of `spec.md`: language
       Python; framework Flask vs standard-library `http.server` (see the course's
       `examples/key-on-server`); the key stays on the server; `flask` and `playwright` named under
       Dependencies before they are installed (the guard blocks them otherwise).
@@ -99,7 +99,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
       Build first against `tests/fakes.py`, then swap in the real modules once PR 2 merges.
       Gate, reviewer, PR comment, fixes. **Ethan approves**, then merge.
 - [ ] L6. `ANNOTATION.md` Web app section, written by Lane.
-- [ ] L7. `CLAUDE.md` Commands: how to run the server and the browser test.
+- [x] L7. `CLAUDE.md` Commands: how to run the server and the browser test.
 - [ ] L8. Tag own `cpsc415-week05` `week06-submitted`; submit PR 3 URL + repo URL on Moodle.
 
 ## Files to create or change

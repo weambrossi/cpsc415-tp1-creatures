@@ -20,6 +20,9 @@ approve or merge a PR, submit on Moodle, or write someone's `ANNOTATION.md` answ
 # test    .venv/bin/python -m pytest            (model tests skipped without OPENROUTER_API_KEY)
 # lint    .venv/bin/ruff check .
 # gate    sh .git/hooks/pre-push                (ruff + no-key tests; runs on every push)
+# server  .venv/bin/python -m app.server         (http://localhost:8000; needs OPENROUTER_API_KEY, which stays on the server)
+# browser .venv/bin/playwright install chromium (once), then .venv/bin/python -m pytest tests/test_browser.py -v
+#         (W11 runs on fakes, free; HEADED=1 shows the browser; W12 is billed and runs only with a key)
 ```
 
 ## Conventions
