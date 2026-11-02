@@ -37,4 +37,4 @@ choosing the best of several images, and fixing a failed image.
 ## Open questions
 None blocking. Which critic is stronger is settled by the comparison on Joud's five images.
 
-**Approved by:** _Joud signs here after reading_
+**Approved by:** Joud Bitar, 2026-11-02
