@@ -100,8 +100,8 @@ _Written by Joud (plan task J3): language and model decisions, numbered behavior
     name and franchise rules apply.
   - `GET /` serves `static/index.html`.
   - `POST /api/generate` with JSON `{"description", "name", "seed"}` returns 200 with `id`,
-    `image` (a `data:` URL), `media_type`, `seed`, `model`, `cost`, `prompt`, `requirements`,
-    `expected_text`.
+    `image` (a `data:` URL), `media_type`, `seed`, `model`, `cost`, `seconds`, `prompt`,
+    `requirements`, `expected_text`.
   - `POST /api/critique` with JSON `{"id"}` returns 200 with the critic-checker's `passes` and
     `problems`, its `check` (`ok`, `problems`, `unmet`, `missing`, `extra`), the critic's `checks`
     (each `requirement`, `met`, `evidence`), `text_read`, `expected_text`, `text_matches`,

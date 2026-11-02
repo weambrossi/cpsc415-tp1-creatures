@@ -15,6 +15,7 @@ import importlib.util
 import os
 import re
 import sys
+import time
 import uuid
 from pathlib import Path
 
@@ -61,10 +62,11 @@ def create_app(make_image, critique) -> Flask:
         except ValueError as e:
             return error(400, str(e))
         try:
+            t0 = time.time()
             g = make_image(p["prompt"], seed)
             entry = {**p, "model": g["model"], "aspect_ratio": "1:1",
                      "file": f"{p['name']}.{EXT.get(g['media_type'], 'bin')}",
-                     "media_type": g["media_type"], "cost": g["cost"]}
+                     "media_type": g["media_type"], "cost": g["cost"], "seconds": round(time.time() - t0, 1)}
             data_url = f"data:{g['media_type']};base64,{base64.b64encode(g['bytes']).decode()}"
         except Exception as e:  # noqa: BLE001  any failure in the call or its reply is shown, never retried
             return error(502, f"The image call failed: {e!r}")
