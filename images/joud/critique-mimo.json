@@ -1,0 +1,312 @@
+[
+  {
+    "name": "emberpup",
+    "model": "xiaomi/mimo-v2.6-flash",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "A single small fire puppy is shown in the image."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background is a solid plain white with no other elements."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "A banner at the top displays the name EMBERPUP in large capital letters."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only visible text in the image is EMBERPUP in the banner."
+        },
+        {
+          "requirement": "The creature's tail ends in a flame",
+          "met": true,
+          "evidence": "The creature's tail clearly ends in a bright orange-red flame shape."
+        },
+        {
+          "requirement": "The creature has glowing ember spots",
+          "met": true,
+          "evidence": "Small glowing orange-yellow ember spots are visible on the creature's fur."
+        }
+      ]
+    },
+    "raw": "{\"checks\": [{\"requirement\": \"There is exactly one creature in the image\", \"met\": true, \"evidence\": \"A single small fire puppy is shown in the image.\"}, {\"requirement\": \"The background is plain white\", \"met\": true, \"evidence\": \"The background is a solid plain white with no other elements.\"}, {\"requirement\": \"The name is shown in a banner at the top\", \"met\": true, \"evidence\": \"A banner at the top displays the name EMBERPUP in large capital letters.\"}, {\"requirement\": \"There is no text other than the name\", \"met\": true, \"evidence\": \"The only visible text in the image is EMBERPUP in the banner.\"}, {\"requirement\": \"The creature's tail ends in a flame\", \"met\": true, \"evidence\": \"The creature's tail clearly ends in a bright orange-red flame shape.\"}, {\"requirement\": \"The creature has glowing ember spots\", \"met\": true, \"evidence\": \"Small glowing orange-yellow ember spots are visible on the creature's fur.\"}]}",
+    "usage": {
+      "in": 1242,
+      "out": 236,
+      "cost": 0.00023996,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "EMBERPUP",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1058,
+      "out": 4,
+      "cost": 0.0001175,
+      "finish": "stop"
+    },
+    "passes": true,
+    "problems": []
+  },
+  {
+    "name": "tidefin",
+    "model": "xiaomi/mimo-v2.6-flash",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "A single round fish creature is shown centered in the image."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background is plain white with only a faint shadow beneath the creature."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "The name \"TIDEFIN\" appears in large capital letters in a banner across the top."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only visible text in the image is the name \"TIDEFIN\"."
+        },
+        {
+          "requirement": "The creature has fins",
+          "met": true,
+          "evidence": "The creature has fin-shaped arms on both sides and small fin-like feet."
+        },
+        {
+          "requirement": "The creature has a wave-shaped crest on its head",
+          "met": true,
+          "evidence": "A light blue wave-shaped crest sits on top of the creature's head."
+        }
+      ]
+    },
+    "raw": "{\"checks\": [{\"requirement\": \"There is exactly one creature in the image\", \"met\": true, \"evidence\": \"A single round fish creature is shown centered in the image.\"}, {\"requirement\": \"The background is plain white\", \"met\": true, \"evidence\": \"The background is plain white with only a faint shadow beneath the creature.\"}, {\"requirement\": \"The name is shown in a banner at the top\", \"met\": true, \"evidence\": \"The name \\\"TIDEFIN\\\" appears in large capital letters in a banner across the top.\"}, {\"requirement\": \"There is no text other than the name\", \"met\": true, \"evidence\": \"The only visible text in the image is the name \\\"TIDEFIN\\\".\"}, {\"requirement\": \"The creature has fins\", \"met\": true, \"evidence\": \"The creature has fin-shaped arms on both sides and small fin-like feet.\"}, {\"requirement\": \"The creature has a wave-shaped crest on its head\", \"met\": true, \"evidence\": \"A light blue wave-shaped crest sits on top of the creature's head.\"}]}",
+    "usage": {
+      "in": 1241,
+      "out": 243,
+      "cost": 0.00024178,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "TIDEFIN",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1058,
+      "out": 4,
+      "cost": 0.0001175,
+      "finish": "stop"
+    },
+    "passes": true,
+    "problems": []
+  },
+  {
+    "name": "sproutle",
+    "model": "xiaomi/mimo-v2.6-flash",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "A single turtle-like creature is shown centered in the image."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background behind the creature and banner is plain white."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "A golden banner at the top displays the name \"SPROUTLE\"."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only text visible is \"SPROUTLE\" in the banner."
+        },
+        {
+          "requirement": "The creature's shell is made of leaves",
+          "met": true,
+          "evidence": "The shell is composed of overlapping green leaves."
+        },
+        {
+          "requirement": "The creature has a sprout on its head",
+          "met": true,
+          "evidence": "A small sprout with a leaf grows from the top of the shell/head area."
+        }
+      ]
+    },
+    "raw": "{\"checks\": [{\"requirement\": \"There is exactly one creature in the image\", \"met\": true, \"evidence\": \"A single turtle-like creature is shown centered in the image.\"}, {\"requirement\": \"The background is plain white\", \"met\": true, \"evidence\": \"The background behind the creature and banner is plain white.\"}, {\"requirement\": \"The name is shown in a banner at the top\", \"met\": true, \"evidence\": \"A golden banner at the top displays the name \\\"SPROUTLE\\\".\"}, {\"requirement\": \"There is no text other than the name\", \"met\": true, \"evidence\": \"The only text visible is \\\"SPROUTLE\\\" in the banner.\"}, {\"requirement\": \"The creature's shell is made of leaves\", \"met\": true, \"evidence\": \"The shell is composed of overlapping green leaves.\"}, {\"requirement\": \"The creature has a sprout on its head\", \"met\": true, \"evidence\": \"A small sprout with a leaf grows from the top of the shell/head area.\"}]}",
+    "usage": {
+      "in": 1247,
+      "out": 233,
+      "cost": 0.00023982,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "SPROUTLE",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1058,
+      "out": 4,
+      "cost": 0.0001175,
+      "finish": "stop"
+    },
+    "passes": true,
+    "problems": []
+  },
+  {
+    "name": "pebblok",
+    "model": "xiaomi/mimo-v2.6-flash",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "Only one armadillo-like creature is visible in the center."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The background is a solid, plain white color."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "The text 'PEBBLOK' appears in a yellow banner across the top."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only text visible is the name 'PEBBLOK' in the banner."
+        },
+        {
+          "requirement": "The creature has a rock shell",
+          "met": true,
+          "evidence": "The creature's shell consists of cracked, stone-like segments."
+        },
+        {
+          "requirement": "The creature has pebbles on its back",
+          "met": true,
+          "evidence": "Several colorful pebble-like stones are embedded on its shell."
+        }
+      ]
+    },
+    "raw": "```json\n{\"checks\": [{\"requirement\": \"There is exactly one creature in the image\", \"met\": true, \"evidence\": \"Only one armadillo-like creature is visible in the center.\"}, {\"requirement\": \"The background is plain white\", \"met\": true, \"evidence\": \"The background is a solid, plain white color.\"}, {\"requirement\": \"The name is shown in a banner at the top\", \"met\": true, \"evidence\": \"The text 'PEBBLOK' appears in a yellow banner across the top.\"}, {\"requirement\": \"There is no text other than the name\", \"met\": true, \"evidence\": \"The only text visible is the name 'PEBBLOK' in the banner.\"}, {\"requirement\": \"The creature has a rock shell\", \"met\": true, \"evidence\": \"The creature's shell consists of cracked, stone-like segments.\"}, {\"requirement\": \"The creature has pebbles on its back\", \"met\": true, \"evidence\": \"Several colorful pebble-like stones are embedded on its shell.\"}]}\n```",
+    "usage": {
+      "in": 1245,
+      "out": 238,
+      "cost": 0.00024094,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "PEBBLOK",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1058,
+      "out": 5,
+      "cost": 0.00011778,
+      "finish": "stop"
+    },
+    "passes": true,
+    "problems": []
+  },
+  {
+    "name": "zapplume",
+    "model": "xiaomi/mimo-v2.6-flash",
+    "critique": {
+      "checks": [
+        {
+          "requirement": "There is exactly one creature in the image",
+          "met": true,
+          "evidence": "The image displays a single bird-like creature in the center."
+        },
+        {
+          "requirement": "The background is plain white",
+          "met": true,
+          "evidence": "The area surrounding the creature and banner is solid white."
+        },
+        {
+          "requirement": "The name is shown in a banner at the top",
+          "met": true,
+          "evidence": "A yellow ribbon banner containing the text 'ZAPPLUME' spans the top of the image."
+        },
+        {
+          "requirement": "There is no text other than the name",
+          "met": true,
+          "evidence": "The only visible text is the word 'ZAPPLUME' inside the banner."
+        },
+        {
+          "requirement": "The creature has feathers that look like storm clouds",
+          "met": true,
+          "evidence": "The creature's plumage is depicted as fluffy, rounded blue shapes resembling cumulus clouds."
+        },
+        {
+          "requirement": "The creature has a lightning-bolt crest",
+          "met": true,
+          "evidence": "A yellow, zigzag lightning bolt shape sits on top of the creature's head."
+        }
+      ]
+    },
+    "raw": "```json\n{\"checks\": [{\"requirement\": \"There is exactly one creature in the image\", \"met\": true, \"evidence\": \"The image displays a single bird-like creature in the center.\"}, {\"requirement\": \"The background is plain white\", \"met\": true, \"evidence\": \"The area surrounding the creature and banner is solid white.\"}, {\"requirement\": \"The name is shown in a banner at the top\", \"met\": true, \"evidence\": \"A yellow ribbon banner containing the text 'ZAPPLUME' spans the top of the image.\"}, {\"requirement\": \"There is no text other than the name\", \"met\": true, \"evidence\": \"The only visible text is the word 'ZAPPLUME' inside the banner.\"}, {\"requirement\": \"The creature has feathers that look like storm clouds\", \"met\": true, \"evidence\": \"The creature's plumage is depicted as fluffy, rounded blue shapes resembling cumulus clouds.\"}, {\"requirement\": \"The creature has a lightning-bolt crest\", \"met\": true, \"evidence\": \"A yellow, zigzag lightning bolt shape sits on top of the creature's head.\"}]}\n```",
+    "usage": {
+      "in": 1243,
+      "out": 254,
+      "cost": 0.00020785,
+      "finish": "stop"
+    },
+    "check": {
+      "ok": true,
+      "problems": [],
+      "unmet": [],
+      "missing": [],
+      "extra": []
+    },
+    "text_read": "ZAPPLUME",
+    "text_matches": true,
+    "usage_text": {
+      "in": 1058,
+      "out": 5,
+      "cost": 0.00011778,
+      "finish": "stop"
+    },
+    "passes": true,
+    "problems": []
+  }
+]
