@@ -26,7 +26,6 @@ from app.generator import EXT, build_prompt, generate_one
 STATIC = Path(__file__).resolve().parent.parent / "static"
 DEFAULT_SEED = 6300
 MAX_DESCRIPTION = 300
-DEFAULT_CRITIC_MODEL = "minimax/minimax-m3"   # used only if app/critic.py names no DEFAULT_MODEL
 KEY_TEXT = re.compile(r"sk-or-[A-Za-z0-9_-]*")
 
 
@@ -63,14 +62,14 @@ def create_app(make_image, critique) -> Flask:
             return error(400, str(e))
         try:
             g = make_image(p["prompt"], seed)
-        except Exception as e:  # noqa: BLE001  any provider failure is shown, never retried
-            return error(502, f"The image call failed: {e}")
+            entry = {**p, "model": g["model"], "aspect_ratio": "1:1",
+                     "file": f"{p['name']}.{EXT.get(g['media_type'], 'bin')}",
+                     "media_type": g["media_type"], "cost": g["cost"]}
+            data_url = f"data:{g['media_type']};base64,{base64.b64encode(g['bytes']).decode()}"
+        except Exception as e:  # noqa: BLE001  any failure in the call or its reply is shown, never retried
+            return error(502, f"The image call failed: {e!r}")
         image_id = uuid.uuid4().hex
-        entry = {**p, "model": g["model"], "aspect_ratio": "1:1",
-                 "file": f"{p['name']}.{EXT.get(g['media_type'], 'bin')}",
-                 "media_type": g["media_type"], "cost": g["cost"]}
         made[image_id] = (g["bytes"], entry)
-        data_url = f"data:{g['media_type']};base64,{base64.b64encode(g['bytes']).decode()}"
         return jsonify({"id": image_id, "image": data_url, **{k: v for k, v in entry.items() if k != "file"}})
 
     @app.post("/api/critique")
@@ -81,24 +80,34 @@ def create_app(make_image, critique) -> Flask:
         image_bytes, entry = made[image_id]
         try:
             result = critique(image_bytes, entry)
+            body = critique_reply(result, entry)
         except CriticMissing as e:
             return error(503, str(e))
-        except Exception as e:  # noqa: BLE001  any provider failure is shown, never retried
-            return error(502, f"The critique call failed: {e}")
-        usage_cost = [(result.get(k) or {}).get("cost") for k in ("usage", "usage_text")]
-        return jsonify({
-            "passes": result.get("passes") is True,
-            "problems": result.get("problems") or [],
-            "check": result.get("check"),
-            "checks": (result.get("critique") or {}).get("checks") or [],
-            "text_read": result.get("text_read"),
-            "text_matches": result.get("text_matches"),
-            "expected_text": entry["expected_text"],
-            "model": result.get("model"),
-            "cost": sum(c for c in usage_cost if c is not None),
-        })
+        except Exception as e:  # noqa: BLE001  any failure in the call or its reply is shown, never retried
+            return error(502, f"The critique call failed: {e!r}")
+        return jsonify(body)
 
     return app
+
+
+def critique_reply(result: dict, entry: dict) -> dict:
+    """What the page needs from the critic-checker's result. Raises if the result is not the shape
+    app.critic.critique_one returns, so the route answers with a JSON 502 instead of a crash."""
+    if not isinstance(result, dict):
+        raise TypeError(f"the critic-checker returned {type(result).__name__}, not a result")
+    costs = [(result.get(k) or {}).get("cost") for k in ("usage", "usage_text") if k in result]
+    return {
+        "passes": result.get("passes") is True,
+        "problems": list(result.get("problems") or []),
+        "check": result.get("check"),
+        "checks": (result.get("critique") or {}).get("checks") or [],
+        "text_read": result.get("text_read"),
+        "text_matches": result.get("text_matches"),
+        "expected_text": entry["expected_text"],
+        "model": result.get("model"),
+        # Both calls' costs added up; null when either reply carried none, never counted as $0.
+        "cost": sum(costs) if costs and all(isinstance(c, (int, float)) for c in costs) else None,
+    }
 
 
 def error(status: int, message: str):
@@ -120,10 +129,9 @@ def real_functions(client):
         return {**generate_one(client, image_model, prompt, seed), "model": image_model}
 
     def critique(image_bytes, entry):
-        critic = load_critic()
-        model = getattr(critic, "DEFAULT_MODEL", DEFAULT_CRITIC_MODEL)
-        return critic.critique_one(client, model, image_bytes, entry["media_type"], entry["prompt"],
-                                   entry["requirements"], entry["expected_text"])
+        critic = load_critic()   # the critic's model choice is Joud's: app.critic.DEFAULT_MODEL
+        return critic.critique_one(client, critic.DEFAULT_MODEL, image_bytes, entry["media_type"],
+                                   entry["prompt"], entry["requirements"], entry["expected_text"])
 
     return make_image, critique
 

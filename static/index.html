@@ -102,8 +102,9 @@ function showCritique(made, c) {
   const n = c.problems.length;
   $("verdict").className = c.passes ? "pass" : "fail";
   $("verdict").textContent = c.passes ? "Every requirement met" : `${n} problem${n === 1 ? "" : "s"} found`;
-  const total = (made.cost || 0) + (c.cost || 0);
-  $("critic-meta").textContent = `Critic ${c.model} · critique $${(c.cost || 0).toFixed(4)} · total $${total.toFixed(4)}`;
+  const money = (x) => (x == null ? "cost not reported" : `$${x.toFixed(4)}`);
+  const total = made.cost == null || c.cost == null ? null : made.cost + c.cost;
+  $("critic-meta").textContent = `Critic ${c.model} · critique ${money(c.cost)} · total ${money(total)}`;
 }
 
 $("form").addEventListener("submit", async (e) => {
@@ -119,7 +120,8 @@ $("form").addEventListener("submit", async (e) => {
     made = await post("/api/generate", { description: $("description").value, name: $("name").value,
                                          seed: $("seed").value });
     $("image").src = made.image;
-    $("meta").textContent = `${made.expected_text} · ${made.model} · seed ${made.seed} · $${(made.cost ?? 0).toFixed(4)}`;
+    $("meta").textContent = `${made.expected_text} · ${made.model} · seed ${made.seed} · ` +
+      (made.cost == null ? "cost not reported" : `$${made.cost.toFixed(4)}`);
     $("result").hidden = false;
     $("status").textContent = "Checking the picture…";
     showCritique(made, await post("/api/critique", { id: made.id }));

@@ -105,7 +105,8 @@ _Written by Joud (plan task J3): language and model decisions, numbered behavior
   - `POST /api/critique` with JSON `{"id"}` returns 200 with the critic-checker's `passes` and
     `problems`, its `check` (`ok`, `problems`, `unmet`, `missing`, `extra`), the critic's `checks`
     (each `requirement`, `met`, `evidence`), `text_read`, `expected_text`, `text_matches`,
-    `model`, and `cost` (both calls added up).
+    `model`, and `cost` (both calls added up, or `null` when either reply had no cost; never
+    counted as $0).
   - Errors are JSON `{"error": "<message>"}`.
   - `python -m app.server [--port 8000]` starts it on localhost.
 - **Dependencies:** `flask`, `playwright` (repository-wide table below).
@@ -125,8 +126,8 @@ _Written by Joud (plan task J3): language and model decisions, numbered behavior
 - W6. An unknown id gets a 404 and no call.
 - W7. While `app/critic.py` does not exist (until PR #3 merges), `POST /api/critique` gets a 503 saying the
   critic-checker is not merged yet.
-- W8. A model call that raises gets a 502 with the error message; any `sk-or-...` text in it is
-  replaced with `[key]`. Nothing is retried.
+- W8. A model call that raises, or returns something the server cannot read, gets a JSON 502
+  with the error message; any `sk-or-...` text in it is replaced with `[key]`. Nothing is retried.
 - W9. Without `OPENROUTER_API_KEY`, `python -m app.server` prints one line saying so and exits 1;
   `create_app` with fakes needs no key.
 - W10. The page shows, for each requirement the critic answered, met or not met with its
