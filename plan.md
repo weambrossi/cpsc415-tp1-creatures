@@ -99,7 +99,7 @@ Week 6 lab. Team: Ethan Ambrossi, Joud, Lane.
       Build first against `tests/fakes.py`, then swap in the real modules once PR 2 merges.
       Gate, reviewer, PR comment, fixes. **Ethan approves**, then merge.
 - [ ] L6. `ANNOTATION.md` Web app section, written by Lane.
-- [ ] L7. `CLAUDE.md` Commands: how to run the server and the browser test.
+- [x] L7. `CLAUDE.md` Commands: how to run the server and the browser test.
 - [ ] L8. Tag own `cpsc415-week05` `week06-submitted`; submit PR 3 URL + repo URL on Moodle.
 
 ## Files to create or change
