@@ -179,3 +179,15 @@ def test_w5_a_missing_cost_is_reported_as_null_not_counted_as_zero():
     client = server.create_app(FakeImageModel(), NoCost()).test_client()
     body = client.post("/api/critique", json={"id": generate(client).get_json()["id"]}).get_json()
     assert body["cost"] is None
+
+
+def test_w5_a_result_with_no_usage_at_all_has_a_null_cost():
+    class NoUsage(FakeCritic):
+        def __call__(self, image_bytes, entry):
+            result = super().__call__(image_bytes, entry)
+            del result["usage"], result["usage_text"]
+            return result
+
+    client = server.create_app(FakeImageModel(), NoUsage()).test_client()
+    body = client.post("/api/critique", json={"id": generate(client).get_json()["id"]}).get_json()
+    assert body["cost"] is None

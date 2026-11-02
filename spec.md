@@ -105,7 +105,9 @@ _Written by Joud (plan task J3): language and model decisions, numbered behavior
   - `POST /api/critique` with JSON `{"id"}` returns 200 with the critic-checker's `passes` and
     `problems`, its `check` (`ok`, `problems`, `unmet`, `missing`, `extra`), the critic's `checks`
     (each `requirement`, `met`, `evidence`), `text_read`, `expected_text`, `text_matches`,
-    `model`, and `cost` (both calls added up, or `null` when either reply had no cost; never
+    `model`, and `cost` (the critic-checker's own two calls, checklist and name read, added up; the
+    image's cost is the generate reply's `cost`, and the page adds the two for its total; `null`
+    when either critic reply had no cost or the result carries no usage at all; never
     counted as $0).
   - Errors are JSON `{"error": "<message>"}`.
   - `python -m app.server [--port 8000]` starts it on localhost.
