@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pocket Creatures</title>
+<style>
+  :root { --bg: #faf8f5; --card: #fff; --ink: #1d1b19; --muted: #6b665f; --line: #e4dfd7;
+          --accent: #6b4fd8; --ok: #1f7a4a; --bad: #b3261e; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161514; --card: #201f1d; --ink: #f1eee9; --muted: #a39d94; --line: #34312d;
+            --accent: #a28df0; --ok: #5cc98c; --bad: #ff8a80; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 60rem; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  h1 { margin: 0 0 .25rem; font-size: 1.9rem; letter-spacing: -.01em; }
+  .lede { margin: 0 0 1.5rem; color: var(--muted); }
+  form { display: grid; grid-template-columns: 1fr 10rem 6rem auto; gap: .75rem; align-items: end;
+         background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1rem; }
+  label { display: grid; gap: .25rem; font-size: .85rem; color: var(--muted); }
+  input { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+          border-radius: 8px; padding: .55rem .7rem; }
+  button { font: inherit; font-weight: 600; color: #fff; background: var(--accent); border: 0;
+           border-radius: 8px; padding: .6rem 1.2rem; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: wait; }
+  #status { min-height: 1.5rem; margin: .75rem 0; color: var(--muted); }
+  .result { display: grid; grid-template-columns: minmax(0, 22rem) 1fr; gap: 1.5rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1rem; }
+  #image { width: 100%; border-radius: 8px; display: block; background: var(--bg); }
+  #meta, .small { font-size: .85rem; color: var(--muted); }
+  #verdict { margin: 0 0 .75rem; font-size: 1.25rem; }
+  #verdict.pass { color: var(--ok); } #verdict.fail { color: var(--bad); }
+  ul { padding-left: 0; list-style: none; margin: 0 0 1rem; }
+  #checks li { padding: .4rem 0; border-bottom: 1px solid var(--line); }
+  #checks li .mark { font-weight: 700; margin-right: .4rem; }
+  .met .mark { color: var(--ok); } .unmet .mark { color: var(--bad); }
+  #problems li { color: var(--bad); padding: .15rem 0; }
+  #error { color: var(--bad); }
+  [hidden] { display: none !important; }
+  @media (max-width: 44rem) { form, .result { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <h1>Pocket Creatures</h1>
+  <p class="lede">Describe an original creature and give it a name. The server draws it, then a
+    vision model checks the picture against a checklist, and plain code checks the critic.</p>
+
+  <form id="form">
+    <label>Description <input id="description" maxlength="300" required
+      placeholder="a small forest fox kit holding an acorn"></label>
+    <label>Name (letters only) <input id="name" maxlength="12" required placeholder="FERNKIT"></label>
+    <label>Seed <input id="seed" type="number" value="6300"></label>
+    <button id="generate">Generate</button>
+  </form>
+  <p id="status" role="status"></p>
+  <p id="error" role="alert"></p>
+
+  <div class="result" id="result" hidden>
+    <figure class="card" style="margin:0">
+      <img id="image" alt="Generated creature">
+      <figcaption id="meta"></figcaption>
+    </figure>
+    <section class="card" id="critique" aria-live="polite">
+      <h2 id="verdict"></h2>
+      <ul id="checks"></ul>
+      <ul id="problems"></ul>
+      <p id="name-read"></p>
+      <p class="small" id="critic-meta"></p>
+    </section>
+  </div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+
+async function post(url, body) {
+  const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+                                 body: JSON.stringify(body) });
+  const data = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
+}
+
+function item(text, cls) {
+  const li = document.createElement("li");
+  if (cls) li.className = cls;
+  li.textContent = text;
+  return li;
+}
+
+function showCritique(made, c) {
+  // The verdict and the named problems come from the critic-checker's code, not from the critic.
+  $("checks").replaceChildren(...c.checks.map((x) => {
+    const li = item("", x.met === true ? "met" : "unmet");
+    const mark = document.createElement("span");
+    mark.className = "mark";
+    mark.textContent = x.met === true ? "✓" : "✗";
+    li.append(mark, `${x.requirement} — ${x.evidence || "no evidence given"}`);
+    return li;
+  }));
+  $("problems").replaceChildren(...c.problems.map((p) => item(p)));
+  $("name-read").textContent = c.text_read == null ? "" :
+    `Banner name read: “${c.text_read}” · expected “${c.expected_text}” · ${c.text_matches ? "match" : "MISMATCH"}`;
+  const n = c.problems.length;
+  $("verdict").className = c.passes ? "pass" : "fail";
+  $("verdict").textContent = c.passes ? "Every requirement met" : `${n} problem${n === 1 ? "" : "s"} found`;
+  const total = (made.cost || 0) + (c.cost || 0);
+  $("critic-meta").textContent = `Critic ${c.model} · critique $${(c.cost || 0).toFixed(4)} · total $${total.toFixed(4)}`;
+}
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("generate").disabled = true;
+  $("error").textContent = "";
+  $("verdict").textContent = "";
+  $("checks").replaceChildren(); $("problems").replaceChildren(); $("name-read").textContent = "";
+  $("critic-meta").textContent = "";
+  let made;
+  try {
+    $("status").textContent = "Drawing the creature…";
+    made = await post("/api/generate", { description: $("description").value, name: $("name").value,
+                                         seed: $("seed").value });
+    $("image").src = made.image;
+    $("meta").textContent = `${made.expected_text} · ${made.model} · seed ${made.seed} · $${(made.cost ?? 0).toFixed(4)}`;
+    $("result").hidden = false;
+    $("status").textContent = "Checking the picture…";
+    showCritique(made, await post("/api/critique", { id: made.id }));
+    $("status").textContent = "";
+  } catch (err) {
+    $("status").textContent = "";
+    $("error").textContent = err.message;
+    if (made) $("verdict").textContent = "No critique";
+  } finally {
+    $("generate").disabled = false;
+  }
+});
+</script>
+</html>
